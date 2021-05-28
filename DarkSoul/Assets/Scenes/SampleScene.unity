@@ -219,6 +219,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &658729152 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100138, guid: 2f9d958fbcd96e44ca35a77a15e3187a, type: 3}
+  m_PrefabInstance: {fileID: 809168994}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,6 +485,7 @@ GameObject:
   - component: {fileID: 1858112717}
   - component: {fileID: 1858112714}
   - component: {fileID: 1858112718}
+  - component: {fileID: 1858112715}
   m_Layer: 0
   m_Name: PlayHandle
   m_TagString: Untagged
@@ -501,6 +507,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &1858112715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858112713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa4f6cc9e6d94bf0a9d64c2dfd90aaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 658729152}
 --- !u!4 &1858112717
 Transform:
   m_ObjectHideFlags: 0

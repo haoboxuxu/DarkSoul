@@ -13,6 +13,13 @@ public class PlayerInput : MonoBehaviour
     public float Dup;
     public float Dright;
 
+    public bool inputEnabled = true;
+
+    private float targetDup;
+    private float targetDright;
+    private float velocityDup;
+    private float velocityDright;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +29,16 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Dup = (Input.GetKey(keyUp)? 1.0f:0) - (Input.GetKey(keyDown) ? 1.0f : 0);
-        Dright = (Input.GetKey(keyRight) ? 1.0f : 0) - (Input.GetKey(keyLeft) ? 1.0f : 0);
+        targetDup = (Input.GetKey(keyUp)? 1.0f:0) - (Input.GetKey(keyDown) ? 1.0f : 0);
+        targetDright = (Input.GetKey(keyRight) ? 1.0f : 0) - (Input.GetKey(keyLeft) ? 1.0f : 0);
+
+        if (enabled == false)
+        {
+            targetDup = 0;
+            targetDright = 0;
+        }
+
+        Dup = Mathf.SmoothDamp(Dup, targetDup, ref velocityDup, 0.1f);
+        Dright = Mathf.SmoothDamp(Dright, targetDright, ref velocityDright, 0.1f);
     }
 }

@@ -28,6 +28,11 @@ public class ActorController : MonoBehaviour
     void Update()
     {
         anim.SetFloat("forward", pi.Dmag * Mathf.Lerp(anim.GetFloat("forward"), (pi.run ? 2.0f : 1.0f), 0.5f));
+        if (pi.jump)
+        {
+            anim.SetTrigger("jump");
+        }
+
         if (pi.Dmag > 0.1f)
         {
             model.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.3f);
@@ -40,5 +45,15 @@ public class ActorController : MonoBehaviour
         //rigid.position += movingVec * Time.fixedDeltaTime;
         rigid.velocity = new Vector3(movingVec.x, rigid.velocity.y, movingVec.z);
         
+    }
+
+    public void OnJumpEnter()
+    {
+        print("OnJumpEnter!!!");
+    }
+
+    public void OnJumpExit()
+    {
+        print("OnJumpExit!!!");
     }
 }

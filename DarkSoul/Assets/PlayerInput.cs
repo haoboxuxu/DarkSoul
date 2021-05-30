@@ -24,6 +24,8 @@ public class PlayerInput : MonoBehaviour
     // 1. pressing signal
     public bool run;
     // 2. trigger once signal
+    public bool jump;
+    public bool lastJump;
     // 2. double trigger signal
 
     [Header("===== Others =====")]
@@ -55,9 +57,35 @@ public class PlayerInput : MonoBehaviour
         Dup = Mathf.SmoothDamp(Dup, targetDup, ref velocityDup, 0.1f);
         Dright = Mathf.SmoothDamp(Dright, targetDright, ref velocityDright, 0.1f);
 
-        Dmag = Mathf.Sqrt((Dup * Dup) + (Dright * Dright));
-        Dvec = Dright * transform.right + Dup * transform.forward;
+        Vector2 tempDAxis = SquareToCircle(new Vector2(Dright, Dup));
+
+        float Dright2 = tempDAxis.y;
+        float Dup2 = tempDAxis.x;
+
+        Dmag = Mathf.Sqrt((Dup2 * Dup2) + (Dright2 * Dright2));
+        Dvec = Dright2 * transform.right + Dup2 * transform.forward;
 
         run = Input.GetKey(keyA);
+
+        bool newJump = Input.GetKey(keyB);
+        if (newJump != lastJump && newJump == true)
+        {
+            jump = true;
+        }
+        else
+        {
+            jump = false;
+        }
+        lastJump = newJump;
+
+
+    }
+
+    private Vector2 SquareToCircle(Vector2 input)
+    {
+        Vector2 output = Vector2.zero;
+        output.x = input.x * Mathf.Sqrt(1 - (input.y * input.y) / 2.0f);
+        output.y = input.y * Mathf.Sqrt(1 - (input.x * input.x) / 2.0f);
+        return output;
     }
 }

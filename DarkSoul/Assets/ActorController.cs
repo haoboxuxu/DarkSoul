@@ -9,11 +9,16 @@ public class ActorController : MonoBehaviour
     public PlayerInput pi;
     public float walkSpeed = 1.4f;
     public float runMultiplier = 2.7f;
+    public float jumpVelocity = 3.0f;
 
     [SerializeField]
     private Animator anim;
     private Rigidbody rigid;
-    private Vector3 movingVec;
+    private Vector3 palnarVec;
+    private Vector3 thrustVec;
+
+    [SerializeField]
+    private bool lockPlanar = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -37,23 +42,31 @@ public class ActorController : MonoBehaviour
         {
             model.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.3f);
         }
-        movingVec = pi.Dmag * model.transform.forward * walkSpeed * (pi.run ? runMultiplier : 1.0f);
+
+        if (lockPlanar == false)
+        {
+            palnarVec = pi.Dmag * model.transform.forward * walkSpeed * (pi.run ? runMultiplier : 1.0f);
+        }
+
     }
 
     void FixedUpdate()
     {
         //rigid.position += movingVec * Time.fixedDeltaTime;
-        rigid.velocity = new Vector3(movingVec.x, rigid.velocity.y, movingVec.z);
-        
+        rigid.velocity = new Vector3(palnarVec.x, rigid.velocity.y, palnarVec.z) + thrustVec;
+        thrustVec = Vector3.zero;
     }
 
     public void OnJumpEnter()
     {
-        print("OnJumpEnter!!!");
+        pi.inputEnabled = false;
+        lockPlanar = true;
+        thrustVec = new Vector3(0, jumpVelocity, 0);
     }
 
     public void OnJumpExit()
     {
-        print("OnJumpExit!!!");
+        pi.inputEnabled = true;
+        lockPlanar = false;
     }
 }
